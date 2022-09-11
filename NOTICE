@@ -1,0 +1,7 @@
+Files in the pkg/convert/internal/valuecache directory are derivative
+work of https://github.com/maxmind/mmdbwriter. They are redistributed
+under the MIT license. Find a copy of the MIT license at
+pkg/convert/internal/valuecache/LICENSE-MIT
+
+The remaining project is licensed under the GNU GENERAL PUBLIC LICENSE
+Version 3. Find a copy of the license in the LICENSE file.

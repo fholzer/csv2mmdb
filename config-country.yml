@@ -1,0 +1,634 @@
+databaseType: City and ASN DB
+# databaseType is part of the DB metadata. Some reader implementations
+# expect a certain string, depending on what type of lookups are
+# performed.
+
+# useValueCache: false
+# Enabling the value cache can drastically reduce memory usage during
+# file conversion, though drastically reduces speed. You'll likely only
+# want to use this when operating on large files, and using fields with
+# high cardinality. Default: false
+
+# `fields` lists each field that shall be created in the resulting mmdb
+# file.
+fields:
+
+  # Each field must specify the `name` and `target` properties.
+  # - name: "source_field_name"
+  #   # The column name specified in the source file's header.
+  #
+  #   target: "target.field.name"
+  #   # The target field name. This value depends on the mmdb file
+  #   # format.
+  #
+  #   type: string
+  #   # The target field type. This value depends on the type of field.
+  #   # Supported types are:
+  #   # string (default)
+  #   # int32
+  #   # int64
+  #   # uint32
+  #   # uint64
+  #   # float32
+  #   # float64
+  #
+  #   ignoreEmpty: false
+  #   # In case the field value is an empty string, the field
+  #   # will be omitted from the target record.
+  #   # Default: false
+  #
+  #   critical: false
+  #   # Indicates that this is a critical field. In case of an empty
+  #   # value, the whole record is omitted, not just this field.
+  #   # Default: false
+  #
+  #   omitZeroValue: false
+  #   # In case the field value is of zero-value, the field
+  #   # will be omitted from the target record.
+  #   # Zero-value for integers is `0`, for strings is `""`, and for
+  #   # booleans is `false`.
+  #   # Default: false
+  #
+  #   capitalization: 
+  #   # If present, changes capitalization of strings. Ignored for types
+  #   # other than strings. Possible values:
+  #   # lower: Lower-cases all characters.
+  #   # upper: Upper-cases all characters.
+  #   # title: Capitalizes the first character of each word.
+  #   # Default: no changes are made
+
+  # CountryRecord
+  - name: country
+    target: country.names.en
+    capitalization: title
+  - name: country_code
+    target: country.iso_code
+    capitalization: upper
+  # - name: unknown
+  #   target: country.is_in_european_union
+  #   type: boolean
+  # - name: unknown
+  #   target: country.geoname_id
+  #   type: integer
+  # - name: unknown
+  #   target: country.confidence
+  #   type: integer
+
+  # ContinentRecord
+  - name: country
+    target: continent.names.en
+    translate:
+      "afghanistan": "Asia"
+      "aland islands": "Europe"
+      "albania": "Europe"
+      "algeria": "Africa"
+      "american samoa": "Oceania"
+      "andorra": "Europe"
+      "angola": "Africa"
+      "anguilla": "North America"
+      "antarctica": "Antarctica"
+      "antigua and barbuda": "North America"
+      "argentina": "South America"
+      "armenia": "Asia"
+      "aruba": "North America"
+      "australia": "Oceania"
+      "austria": "Europe"
+      "azerbaijan": "Asia"
+      "bahamas": "North America"
+      "bahrain": "Asia"
+      "bangladesh": "Asia"
+      "barbados": "North America"
+      "belarus": "Europe"
+      "belgium": "Europe"
+      "belize": "North America"
+      "benin": "Africa"
+      "bermuda": "North America"
+      "bhutan": "Asia"
+      "bolivia": "South America"
+      "caribbean netherlands": "North America"
+      "bosnia and herzegovina": "Europe"
+      "botswana": "Africa"
+      "bouvet island": "South America"
+      "brazil": "South America"
+      "british indian ocean territory": "Africa"
+      "virgin islands (british)": "North America"
+      "brunei darussalam": "Asia"
+      "bulgaria": "Europe"
+      "burkina faso": "Africa"
+      "burundi": "Africa"
+      "cape verde": "Africa"
+      "cambodia": "Asia"
+      "cameroon": "Africa"
+      "canada": "North America"
+      "cayman islands": "North America"
+      "central african republic": "Africa"
+      "chad": "Africa"
+      "chile": "South America"
+      "china": "Asia"
+      "hong kong": "Asia"
+      "macao": "Asia"
+      "taiwan": "Asia"
+      "christmas island": "Oceania"
+      "cocos (keeling) islands": "Oceania"
+      "colombia": "South America"
+      "comoros": "Africa"
+      "congo": "Africa"
+      "cook islands": "Oceania"
+      "costa rica": "North America"
+      "cote d'ivoire": "Africa"
+      "croatia": "Europe"
+      "cuba": "North America"
+      "curacao": "North America"
+      "cyprus": "Asia"
+      "czechia": "Europe"
+      "korea (north)": "Asia"
+      "democratic republic of the congo": "Africa"
+      "denmark": "Europe"
+      "djibouti": "Africa"
+      "dominica": "North America"
+      "dominican republic": "North America"
+      "ecuador": "South America"
+      "egypt": "Africa"
+      "el salvador": "North America"
+      "equatorial guinea": "Africa"
+      "eritrea": "Africa"
+      "estonia": "Europe"
+      "swaziland": "Africa"
+      "ethiopia": "Africa"
+      "falkland islands (malvinas)": "South America"
+      "faroe islands": "Europe"
+      "fiji": "Oceania"
+      "finland": "Europe"
+      "france": "Europe"
+      "french guiana": "South America"
+      "french polynesia": "Oceania"
+      "french southern territories": "Africa"
+      "gabon": "Africa"
+      "gambia": "Africa"
+      "georgia": "Asia"
+      "germany": "Europe"
+      "ghana": "Africa"
+      "gibraltar": "Europe"
+      "greece": "Europe"
+      "greenland": "North America"
+      "grenada": "North America"
+      "guadeloupe": "North America"
+      "guam": "Oceania"
+      "guatemala": "North America"
+      "guernsey": "Europe"
+      "guinea": "Africa"
+      "guinea-bissau": "Africa"
+      "guyana": "South America"
+      "haiti": "North America"
+      "heard island and mcdonald islands": "Oceania"
+      "holy see (vatican city state)": "Europe"
+      "honduras": "North America"
+      "hungary": "Europe"
+      "iceland": "Europe"
+      "india": "Asia"
+      "indonesia": "Asia"
+      "iran": "Asia"
+      "iraq": "Asia"
+      "ireland": "Europe"
+      "isle of man": "Europe"
+      "israel": "Asia"
+      "italy": "Europe"
+      "jamaica": "North America"
+      "japan": "Asia"
+      "jersey": "Europe"
+      "jordan": "Asia"
+      "kazakhstan": "Asia"
+      "kenya": "Africa"
+      "kiribati": "Oceania"
+      "kuwait": "Asia"
+      "kyrgyzstan": "Asia"
+      "laos": "Asia"
+      "latvia": "Europe"
+      "lebanon": "Asia"
+      "lesotho": "Africa"
+      "liberia": "Africa"
+      "libya": "Africa"
+      "liechtenstein": "Europe"
+      "lithuania": "Europe"
+      "luxembourg": "Europe"
+      "madagascar": "Africa"
+      "malawi": "Africa"
+      "macau": "Asia"
+      "malaysia": "Asia"
+      "maldives": "Asia"
+      "mali": "Africa"
+      "malta": "Europe"
+      "marshall islands": "Oceania"
+      "martinique": "North America"
+      "mauritania": "Africa"
+      "mauritius": "Africa"
+      "mayotte": "Africa"
+      "mexico": "North America"
+      "micronesia": "Oceania"
+      "monaco": "Europe"
+      "mongolia": "Asia"
+      "montenegro": "Europe"
+      "montserrat": "North America"
+      "morocco": "Africa"
+      "mozambique": "Africa"
+      "myanmar": "Asia"
+      "namibia": "Africa"
+      "nauru": "Oceania"
+      "nepal": "Asia"
+      "netherlands": "Europe"
+      "new caledonia": "Oceania"
+      "new zealand": "Oceania"
+      "nicaragua": "North America"
+      "niger": "Africa"
+      "nigeria": "Africa"
+      "niue": "Oceania"
+      "norfolk island": "Oceania"
+      "macedonia": "Europe"
+      "north macedonia": "Europe"
+      "northern mariana islands": "Oceania"
+      "norway": "Europe"
+      "oman": "Asia"
+      "pakistan": "Asia"
+      "palau": "Oceania"
+      "panama": "North America"
+      "papua new guinea": "Oceania"
+      "paraguay": "South America"
+      "peru": "South America"
+      "philippines": "Asia"
+      "pitcairn": "Oceania"
+      "poland": "Europe"
+      "portugal": "Europe"
+      "puerto rico": "North America"
+      "qatar": "Asia"
+      "korea (south)": "Asia"
+      "moldova": "Europe"
+      "reunion": "Africa"
+      "romania": "Europe"
+      "russian federation": "Europe"
+      "rwanda": "Africa"
+      "saint barthelemy": "North America"
+      "saint helena": "Africa"
+      "saint kitts and nevis": "North America"
+      "saint lucia": "North America"
+      "saint martin": "North America"
+      "saint pierre and miquelon": "North America"
+      "saint vincent and the grenadines": "North America"
+      "samoa": "Oceania"
+      "san marino": "Europe"
+      "sao tome and principe": "Africa"
+      "sark": "Europe"
+      "saudi arabia": "Asia"
+      "senegal": "Africa"
+      "serbia": "Europe"
+      "seychelles": "Africa"
+      "sierra leone": "Africa"
+      "singapore": "Asia"
+      "sint maarten": "North America"
+      "slovak republic": "Europe"
+      "slovenia": "Europe"
+      "solomon islands": "Oceania"
+      "somalia": "Africa"
+      "south africa": "Africa"
+      "south georgia and the south sandwich islands": "South America"
+      "south sudan": "Africa"
+      "spain": "Europe"
+      "sri lanka": "Asia"
+      "occupied palestinian territory": "Asia"
+      "sudan": "Africa"
+      "suriname": "South America"
+      "svalbard and jan mayen": "Europe"
+      "sweden": "Europe"
+      "switzerland": "Europe"
+      "syria": "Asia"
+      "tajikistan": "Asia"
+      "thailand": "Asia"
+      "timor-leste": "Asia"
+      "togo": "Africa"
+      "tokelau": "Oceania"
+      "tonga": "Oceania"
+      "trinidad and tobago": "North America"
+      "tunisia": "Africa"
+      "turkey": "Asia"
+      "turkmenistan": "Asia"
+      "turks and caicos islands": "North America"
+      "tuvalu": "Oceania"
+      "uganda": "Africa"
+      "ukraine": "Europe"
+      "united arab emirates": "Asia"
+      "united kingdom": "Europe"
+      "tanzania": "Africa"
+      "united states minor outlying islands": "Oceania"
+      "united states": "North America"
+      "virgin islands (u.s.)": "North America"
+      "uruguay": "South America"
+      "uzbekistan": "Asia"
+      "vanuatu": "Oceania"
+      "venezuela": "South America"
+      "viet nam": "Asia"
+      "wallis and futuna islands": "Oceania"
+      "western sahara": "Africa"
+      "yemen": "Asia"
+      "zambia": "Africa"
+      "zimbabwe": "Africa"
+  - name: country
+    target: continent.code
+    translate:
+      "afghanistan": "AS"
+      "aland islands": "EU"
+      "albania": "EU"
+      "algeria": "AF"
+      "american samoa": "OC"
+      "andorra": "EU"
+      "angola": "AF"
+      "anguilla": "NA"
+      "antarctica": "AN"
+      "antigua and barbuda": "NA"
+      "argentina": "SA"
+      "armenia": "AS"
+      "aruba": "NA"
+      "australia": "OC"
+      "austria": "EU"
+      "azerbaijan": "AS"
+      "bahamas": "NA"
+      "bahrain": "AS"
+      "bangladesh": "AS"
+      "barbados": "NA"
+      "belarus": "EU"
+      "belgium": "EU"
+      "belize": "NA"
+      "benin": "AF"
+      "bermuda": "NA"
+      "bhutan": "AS"
+      "bolivia": "SA"
+      "caribbean netherlands": "NA"
+      "bosnia and herzegovina": "EU"
+      "botswana": "AF"
+      "bouvet island": "SA"
+      "brazil": "SA"
+      "british indian ocean territory": "AF"
+      "virgin islands (british)": "NA"
+      "brunei darussalam": "AS"
+      "bulgaria": "EU"
+      "burkina faso": "AF"
+      "burundi": "AF"
+      "cape verde": "AF"
+      "cambodia": "AS"
+      "cameroon": "AF"
+      "canada": "NA"
+      "cayman islands": "NA"
+      "central african republic": "AF"
+      "chad": "AF"
+      "chile": "SA"
+      "china": "AS"
+      "hong kong": "AS"
+      "macao": "AS"
+      "taiwan": "AS"
+      "christmas island": "OC"
+      "cocos (keeling) islands": "OC"
+      "colombia": "SA"
+      "comoros": "AF"
+      "congo": "AF"
+      "cook islands": "OC"
+      "costa rica": "NA"
+      "cote d'ivoire": "AF"
+      "croatia": "EU"
+      "cuba": "NA"
+      "curacao": "NA"
+      "cyprus": "AS"
+      "czechia": "EU"
+      "korea (north)": "AS"
+      "democratic republic of the congo": "AF"
+      "denmark": "EU"
+      "djibouti": "AF"
+      "dominica": "NA"
+      "dominican republic": "NA"
+      "ecuador": "SA"
+      "egypt": "AF"
+      "el salvador": "NA"
+      "equatorial guinea": "AF"
+      "eritrea": "AF"
+      "estonia": "EU"
+      "swaziland": "AF"
+      "ethiopia": "AF"
+      "falkland islands (malvinas)": "SA"
+      "faroe islands": "EU"
+      "fiji": "OC"
+      "finland": "EU"
+      "france": "EU"
+      "french guiana": "SA"
+      "french polynesia": "OC"
+      "french southern territories": "AF"
+      "gabon": "AF"
+      "gambia": "AF"
+      "georgia": "AS"
+      "germany": "EU"
+      "ghana": "AF"
+      "gibraltar": "EU"
+      "greece": "EU"
+      "greenland": "NA"
+      "grenada": "NA"
+      "guadeloupe": "NA"
+      "guam": "OC"
+      "guatemala": "NA"
+      "guernsey": "EU"
+      "guinea": "AF"
+      "guinea-bissau": "AF"
+      "guyana": "SA"
+      "haiti": "NA"
+      "heard island and mcdonald islands": "OC"
+      "holy see (vatican city state)": "EU"
+      "honduras": "NA"
+      "hungary": "EU"
+      "iceland": "EU"
+      "india": "AS"
+      "indonesia": "AS"
+      "iran": "AS"
+      "iraq": "AS"
+      "ireland": "EU"
+      "isle of man": "EU"
+      "israel": "AS"
+      "italy": "EU"
+      "jamaica": "NA"
+      "japan": "AS"
+      "jersey": "EU"
+      "jordan": "AS"
+      "kazakhstan": "AS"
+      "kenya": "AF"
+      "kiribati": "OC"
+      "kuwait": "AS"
+      "kyrgyzstan": "AS"
+      "laos": "AS"
+      "latvia": "EU"
+      "lebanon": "AS"
+      "lesotho": "AF"
+      "liberia": "AF"
+      "libya": "AF"
+      "liechtenstein": "EU"
+      "lithuania": "EU"
+      "luxembourg": "EU"
+      "madagascar": "AF"
+      "malawi": "AF"
+      "macau": "AS"
+      "malaysia": "AS"
+      "maldives": "AS"
+      "mali": "AF"
+      "malta": "EU"
+      "marshall islands": "OC"
+      "martinique": "NA"
+      "mauritania": "AF"
+      "mauritius": "AF"
+      "mayotte": "AF"
+      "mexico": "NA"
+      "micronesia": "OC"
+      "monaco": "EU"
+      "mongolia": "AS"
+      "montenegro": "EU"
+      "montserrat": "NA"
+      "morocco": "AF"
+      "mozambique": "AF"
+      "myanmar": "AS"
+      "namibia": "AF"
+      "nauru": "OC"
+      "nepal": "AS"
+      "netherlands": "EU"
+      "new caledonia": "OC"
+      "new zealand": "OC"
+      "nicaragua": "NA"
+      "niger": "AF"
+      "nigeria": "AF"
+      "niue": "OC"
+      "norfolk island": "OC"
+      "macedonia": "EU"
+      "north macedonia": "EU"
+      "northern mariana islands": "OC"
+      "norway": "EU"
+      "oman": "AS"
+      "pakistan": "AS"
+      "palau": "OC"
+      "panama": "NA"
+      "papua new guinea": "OC"
+      "paraguay": "SA"
+      "peru": "SA"
+      "philippines": "AS"
+      "pitcairn": "OC"
+      "poland": "EU"
+      "portugal": "EU"
+      "puerto rico": "NA"
+      "qatar": "AS"
+      "korea (south)": "AS"
+      "moldova": "EU"
+      "reunion": "AF"
+      "romania": "EU"
+      "russian federation": "EU"
+      "rwanda": "AF"
+      "saint barthelemy": "NA"
+      "saint helena": "AF"
+      "saint kitts and nevis": "NA"
+      "saint lucia": "NA"
+      "saint martin": "NA"
+      "saint pierre and miquelon": "NA"
+      "saint vincent and the grenadines": "NA"
+      "samoa": "OC"
+      "san marino": "EU"
+      "sao tome and principe": "AF"
+      "sark": "EU"
+      "saudi arabia": "AS"
+      "senegal": "AF"
+      "serbia": "EU"
+      "seychelles": "AF"
+      "sierra leone": "AF"
+      "singapore": "AS"
+      "sint maarten": "NA"
+      "slovak republic": "EU"
+      "slovenia": "EU"
+      "solomon islands": "OC"
+      "somalia": "AF"
+      "south africa": "AF"
+      "south georgia and the south sandwich islands": "SA"
+      "south sudan": "AF"
+      "spain": "EU"
+      "sri lanka": "AS"
+      "occupied palestinian territory": "AS"
+      "sudan": "AF"
+      "suriname": "SA"
+      "svalbard and jan mayen": "EU"
+      "sweden": "EU"
+      "switzerland": "EU"
+      "syria": "AS"
+      "tajikistan": "AS"
+      "thailand": "AS"
+      "timor-leste": "AS"
+      "togo": "AF"
+      "tokelau": "OC"
+      "tonga": "OC"
+      "trinidad and tobago": "NA"
+      "tunisia": "AF"
+      "turkey": "AS"
+      "turkmenistan": "AS"
+      "turks and caicos islands": "NA"
+      "tuvalu": "OC"
+      "uganda": "AF"
+      "ukraine": "EU"
+      "united arab emirates": "AS"
+      "united kingdom": "EU"
+      "tanzania": "AF"
+      "united states minor outlying islands": "OC"
+      "united states": "NA"
+      "virgin islands (u.s.)": "NA"
+      "uruguay": "SA"
+      "uzbekistan": "AS"
+      "vanuatu": "OC"
+      "venezuela": "SA"
+      "viet nam": "AS"
+      "wallis and futuna islands": "OC"
+      "western sahara": "AF"
+      "yemen": "AS"
+      "zambia": "AF"
+      "zimbabwe": "AF"
+  # - name: continent
+  #   translate:
+  #     africa: AF
+  #     antarctica: AN
+  #     asia: AS
+  #     australia: OC
+  #     europe: EU
+  #     north america: NA
+  #     oceania: OC
+  #     south america: SA
+  # - name: continent
+  #   target: continent.names.en
+  # - name: unknown
+  #   target: continent.geoname_id
+  #   type: integer
+
+  # # # CityResponse
+  # - name: city
+  #   target: city.names.en
+  #   ignoreEmpty: true
+  #   critical: true
+  # - name: latitude
+  #   target: location.latitude
+  #   type: float32
+  #   ignoreEmpty: true
+  # - name: longitude
+  #   target: location.longitude
+  #   ignoreEmpty: true
+  #   type: float32
+
+
+  # TraitsRecord
+  # - name: asn
+  #   target: traits.autonomous_system_number
+  #   type: integer
+  #   ignoreEmpty: true
+  # - name: hosting_facility
+  #   target: traits.is_hosting_provider
+  #   type: boolean
+  #   omitZeroValue: true
+
+  # AsnResponse
+  - name: asn
+    target: autonomous_system_number
+    type: uint32
+    ignoreEmpty: true
+
