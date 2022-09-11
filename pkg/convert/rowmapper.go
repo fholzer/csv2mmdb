@@ -32,6 +32,7 @@ func NewMapper(config *Config, header []string) (*RowMapper, error) {
 	// stored the first FieldConfig that causes that object to be created
 	targetFields := map[string]*FieldConfig{}
 	targetToSourceOffsetMapping := map[string]int{}
+	stringCache := map[string]mmdbtype.String{}
 
 	for _, fieldConfig := range config.Fields {
 		sourceFieldNames = append(sourceFieldNames, fieldConfig.Name)
@@ -64,6 +65,8 @@ func NewMapper(config *Config, header []string) (*RowMapper, error) {
 		// extract objects names from field paths and populate targetFields
 		fieldComponents := strings.Split(fieldConfig.Target, ".")
 		for i := 0; i < len(fieldComponents)-1; i++ {
+			c := fieldComponents[i]
+			stringCache[c] = mmdbtype.String(c)
 			fc := strings.Join(fieldComponents[:i+1], ".")
 			if _, ok := targetFields[fc]; !ok {
 				targetFields[fc] = fieldConfig
@@ -84,7 +87,7 @@ func NewMapper(config *Config, header []string) (*RowMapper, error) {
 		sourceFieldNames:         sourceFieldNames,
 		targetFields:             targetFields,
 		sourceFieldHeaderOffsets: sourceFieldHeaderOffsets,
-		stringCache:              map[string]mmdbtype.String{},
+		stringCache:              stringCache,
 	}, nil
 }
 
@@ -134,9 +137,7 @@ func (m *RowMapper) getCachedString(s string) mmdbtype.String {
 	if cachedValue, ok := m.stringCache[s]; ok {
 		return cachedValue
 	}
-	val := mmdbtype.String(s)
-	m.stringCache[s] = val
-	return val
+	return mmdbtype.String(s)
 }
 
 func (m *RowMapper) getMapByComponents(parent mmdbRow, components []string) (mmdbRow, error) {
