@@ -45,6 +45,7 @@ func NewMapper(config *Config, header []string) (*RowMapper, error) {
 				sourceFieldHeaderOffsets[fieldConfig.Name] = i
 				targetToSourceOffsetMapping[fieldConfig.Target] = i
 				foundHeader = true
+				break
 			}
 		}
 		if !foundHeader {
