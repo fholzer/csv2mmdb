@@ -70,16 +70,18 @@ func NewFieldMapper(f *FieldConfig) (FieldMapper, error) {
 		return NewStringFieldMapper(f), nil
 	case "int32":
 		return NewInt32FieldMapper(f), nil
+	case "uint16":
+		return NewUint16FieldMapper(f), nil
 	case "uint32":
 		return NewUint32FieldMapper(f), nil
-	case "int64":
-		return NewInt64FieldMapper(f), nil
 	case "uint64":
 		return NewUint64FieldMapper(f), nil
 	case "boolean":
 		return NewBooleanFieldMapper(f), nil
 	case "float32":
 		return NewFloat32FieldMapper(f), nil
+	case "float64":
+		return NewFloat64FieldMapper(f), nil
 	default:
 		return nil, fmt.Errorf("unknown field type '%s' for field '%s'", f.Type, f.Name)
 	}
@@ -91,7 +93,6 @@ func newBaseFieldMapper(fc *FieldConfig) *BaseFieldMapper {
 
 	switch fc.Capitalization {
 	case "":
-		break
 	case "lower":
 		caser = &lowerCaser
 	case "upper":
@@ -157,7 +158,25 @@ func (m *Int32FieldMapper) Map(input string) (mmdbtype.DataType, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "Error converting field '%s' to int32: '%s'", m.Name, input)
 	}
-	return mmdbtype.Uint32(i), nil
+	return mmdbtype.Int32(i), nil
+}
+
+type Uint16FieldMapper struct {
+	BaseFieldMapper
+}
+
+func NewUint16FieldMapper(fc *FieldConfig) *Uint16FieldMapper {
+	return &Uint16FieldMapper{
+		BaseFieldMapper: *newBaseFieldMapper(fc),
+	}
+}
+
+func (m *Uint16FieldMapper) Map(input string) (mmdbtype.DataType, error) {
+	i, err := strconv.ParseUint(input, 10, 16)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Error converting field '%s' to int32: '%s'", m.Name, input)
+	}
+	return mmdbtype.Uint16(i), nil
 }
 
 type Uint32FieldMapper struct {
@@ -172,24 +191,6 @@ func NewUint32FieldMapper(fc *FieldConfig) *Uint32FieldMapper {
 
 func (m *Uint32FieldMapper) Map(input string) (mmdbtype.DataType, error) {
 	i, err := strconv.ParseUint(input, 10, 32)
-	if err != nil {
-		return nil, errors.Wrapf(err, "Error converting field '%s' to int32: '%s'", m.Name, input)
-	}
-	return mmdbtype.Uint32(i), nil
-}
-
-type Int64FieldMapper struct {
-	BaseFieldMapper
-}
-
-func NewInt64FieldMapper(fc *FieldConfig) *Int64FieldMapper {
-	return &Int64FieldMapper{
-		BaseFieldMapper: *newBaseFieldMapper(fc),
-	}
-}
-
-func (m *Int64FieldMapper) Map(input string) (mmdbtype.DataType, error) {
-	i, err := strconv.ParseInt(input, 10, 64)
 	if err != nil {
 		return nil, errors.Wrapf(err, "Error converting field '%s' to int32: '%s'", m.Name, input)
 	}
@@ -211,7 +212,7 @@ func (m *Uint64FieldMapper) Map(input string) (mmdbtype.DataType, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "Error converting field '%s' to int32: '%s'", m.Name, input)
 	}
-	return mmdbtype.Uint32(i), nil
+	return mmdbtype.Uint64(i), nil
 }
 
 type BooleanFieldMapper struct {
@@ -265,4 +266,27 @@ func (m *Float32FieldMapper) Map(input string) (mmdbtype.DataType, error) {
 	}
 
 	return mmdbtype.Float32(v), nil
+}
+
+type Float64FieldMapper struct {
+	BaseFieldMapper
+}
+
+func NewFloat64FieldMapper(fc *FieldConfig) *Float64FieldMapper {
+	return &Float64FieldMapper{
+		BaseFieldMapper: *newBaseFieldMapper(fc),
+	}
+}
+
+func (m *Float64FieldMapper) Map(input string) (mmdbtype.DataType, error) {
+	v, err := strconv.ParseFloat(input, 64)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Error converting field '%s' to float32: '%s'", m.Name, input)
+	}
+
+	if v == 0 && m.OmitZeroValue {
+		return nil, nil
+	}
+
+	return mmdbtype.Float64(v), nil
 }
